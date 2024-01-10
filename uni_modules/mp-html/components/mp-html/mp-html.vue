@@ -1,11 +1,12 @@
 <template>
-  <view id="_root" :class="(selectable?'_select ':'')+'_root'" :style="containerStyle">
+  <view id="_root" :class="(selectable ? '_select ' : '') + '_root'" :style="containerStyle">
     <slot v-if="!nodes[0]" />
     <!-- #ifndef APP-PLUS-NVUE -->
-    <node v-else :childs="nodes" :opts="[lazyLoad,loadingImg,errorImg,showImgMenu,selectable]" name="span" />
+    <node v-else :childs="nodes" :opts="[lazyLoad, loadingImg, errorImg, showImgMenu, selectable]" name="span" />
     <!-- #endif -->
     <!-- #ifdef APP-PLUS-NVUE -->
-    <web-view ref="web" src="/static/app-plus/mp-html/local.html" :style="'margin-top:-2px;height:' + height + 'px'" @onPostMessage="_onMessage" />
+    <web-view ref="web" src="/static/app-plus/mp-html/local.html" :style="'margin-top:-2px;height:' + height + 'px'"
+      @onPostMessage="_onMessage" />
     <!-- #endif -->
   </view>
 </template>
@@ -47,7 +48,7 @@ const dom = weex.requireModule('dom')
 // #endif
 export default {
   name: 'mp-html',
-  data () {
+  data() {
     return {
       nodes: [],
       // #ifdef APP-PLUS-NVUE
@@ -103,7 +104,7 @@ export default {
     useAnchor: [Boolean, Number]
   },
   // #ifdef VUE3
-  emits: ['load', 'ready', 'imgtap', 'linktap', 'play', 'error'],
+  emits: ['load', 'ready', 'imgtap', 'linktap', 'play', 'error', 'fullscreenchange'],
   // #endif
   // #ifndef APP-PLUS-NVUE
   components: {
@@ -111,22 +112,22 @@ export default {
   },
   // #endif
   watch: {
-    content (content) {
+    content(content) {
       this.setContent(content)
     }
   },
-  created () {
+  created() {
     this.plugins = []
     for (let i = plugins.length; i--;) {
       this.plugins.push(new plugins[i](this))
     }
   },
-  mounted () {
+  mounted() {
     if (this.content && !this.nodes.length) {
       this.setContent(this.content)
     }
   },
-  beforeDestroy () {
+  beforeDestroy() {
     this._hook('onDetached')
   },
   methods: {
@@ -136,7 +137,7 @@ export default {
      * @param {String} selector scroll-view 的选择器
      * @param {String} scrollTop scroll-view scroll-top 属性绑定的变量名
      */
-    in (page, selector, scrollTop) {
+    in(page, selector, scrollTop) {
       // #ifndef APP-PLUS-NVUE
       if (page && selector && scrollTop) {
         this._in = {
@@ -154,7 +155,7 @@ export default {
      * @param {Number} offset 跳转位置的偏移量
      * @returns {Promise}
      */
-    navigateTo (id, offset) {
+    navigateTo(id, offset) {
       return new Promise((resolve, reject) => {
         if (!this.useAnchor) {
           reject(Error('Anchor is disabled'))
@@ -219,9 +220,9 @@ export default {
      * @description 获取文本内容
      * @return {String}
      */
-    getText (nodes) {
+    getText(nodes) {
       let text = '';
-      (function traversal (nodes) {
+      (function traversal(nodes) {
         for (let i = 0; i < nodes.length; i++) {
           const node = nodes[i]
           if (node.type === 'text') {
@@ -253,7 +254,7 @@ export default {
      * @description 获取内容大小和位置
      * @return {Promise}
      */
-    getRect () {
+    getRect() {
       return new Promise((resolve, reject) => {
         uni.createSelectorQuery()
           // #ifndef MP-ALIPAY
@@ -266,7 +267,7 @@ export default {
     /**
      * @description 暂停播放媒体
      */
-    pauseMedia () {
+    pauseMedia() {
       for (let i = (this._videos || []).length; i--;) {
         this._videos[i].pause()
       }
@@ -287,7 +288,7 @@ export default {
      * @description 设置媒体播放速率
      * @param {Number} rate 播放速率
      */
-    setPlaybackRate (rate) {
+    setPlaybackRate(rate) {
       this.playbackRate = rate
       for (let i = (this._videos || []).length; i--;) {
         this._videos[i].playbackRate(rate)
@@ -310,7 +311,7 @@ export default {
      * @param {String} content html 内容
      * @param {Boolean} append 是否在尾部追加
      */
-    setContent (content, append) {
+    setContent(content, append) {
       if (!append || !this.imgList) {
         this.imgList = []
       }
@@ -361,7 +362,7 @@ export default {
     /**
      * @description 调用插件钩子函数
      */
-    _hook (name) {
+    _hook(name) {
       for (let i = plugins.length; i--;) {
         if (this.plugins[i][name]) {
           this.plugins[i][name]()
@@ -373,14 +374,14 @@ export default {
     /**
      * @description 设置内容
      */
-    _set (nodes, append) {
+    _set(nodes, append) {
       this.$refs.web.evalJs('setContent(' + JSON.stringify(nodes).replace(/%22/g, '') + ',' + JSON.stringify([this.containerStyle.replace(/(?:margin|padding)[^;]+/g, ''), this.errorImg, this.loadingImg, this.pauseVideo, this.scrollTable, this.selectable]) + ',' + append + ')')
     },
 
     /**
      * @description 接收到 web-view 消息
      */
-    _onMessage (e) {
+    _onMessage(e) {
       const message = e.detail.data[0]
       switch (message.action) {
         // web-view 初始化完毕
@@ -438,7 +439,7 @@ export default {
             } else {
               uni.navigateTo({
                 url: href,
-                fail () {
+                fail() {
                   uni.switchTab({
                     url: href
                   })
@@ -494,5 +495,6 @@ export default {
 ._select {
   user-select: text;
 }
+
 /* #endif */
 </style>

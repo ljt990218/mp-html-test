@@ -57,7 +57,7 @@ const _sfc_main = {
     tagStyle: Object,
     useAnchor: [Boolean, Number]
   },
-  emits: ["load", "ready", "imgtap", "linktap", "play", "error"],
+  emits: ["load", "ready", "imgtap", "linktap", "play", "error", "fullscreenchange"],
   components: {
     node
   },

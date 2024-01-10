@@ -44,6 +44,7 @@ const _sfc_main = {
      * @param {Event} e
      */
     play(e) {
+      console.log("播放视频事件", e);
       this.root.$emit("play");
       if (this.root.pauseVideo) {
         let flag = false;
@@ -73,6 +74,7 @@ const _sfc_main = {
      * @param {Event} e
      */
     imgTap(e) {
+      console.log("图片点击事件", e);
       const node2 = this.childs[e.currentTarget.dataset.i];
       if (node2.a) {
         this.linkTap(node2.a);
@@ -192,6 +194,14 @@ const _sfc_main = {
           errMsg: e.detail.errMsg
         });
       }
+    },
+    /**
+     * @description 视频全屏切换监听
+     * @param {Event} e
+     */
+    fullscreenchange(e) {
+      console.log("视频全屏切换监听", e.detail.fullscreen);
+      this.root.$emit("fullscreenchange", e.detail.fullscreen);
     }
   }
 };
@@ -226,7 +236,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         k: common_vendor.n("_img " + n.attrs.class),
         l: common_vendor.s(($data.ctrl[i] === -1 ? "display:none;" : "") + "width:" + ($data.ctrl[i] || 1) + "px;height:1px;" + n.attrs.style),
         m: n.attrs.src,
-        n: !n.h ? "widthFix" : !n.w ? "heightFix" : "scaleToFill",
+        n: !n.h ? "widthFix" : !n.w ? "heightFix" : n.m || "scaleToFill",
         o: $props.opts[0],
         p: n.webp,
         q: $props.opts[3] && !n.attrs.ignore,
@@ -264,30 +274,31 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         U: n.src[$data.ctrl[i] || 0],
         V: i,
         W: common_vendor.o((...args) => $options.play && $options.play(...args), i),
-        X: common_vendor.o((...args) => $options.mediaError && $options.mediaError(...args), i)
+        X: common_vendor.o((...args) => $options.mediaError && $options.mediaError(...args), i),
+        Y: common_vendor.o((...args) => $options.fullscreenchange && $options.fullscreenchange(...args), i)
       } : n.name === "audio" ? {
-        Z: n.attrs.id,
-        aa: common_vendor.n(n.attrs.class),
-        ab: common_vendor.s(n.attrs.style),
-        ac: n.attrs.author,
-        ad: n.attrs.controls,
-        ae: n.attrs.loop,
-        af: n.attrs.name,
-        ag: n.attrs.poster,
-        ah: n.src[$data.ctrl[i] || 0],
-        ai: i,
-        aj: common_vendor.o((...args) => $options.play && $options.play(...args), i),
-        ak: common_vendor.o((...args) => $options.mediaError && $options.mediaError(...args), i)
+        aa: n.attrs.id,
+        ab: common_vendor.n(n.attrs.class),
+        ac: common_vendor.s(n.attrs.style),
+        ad: n.attrs.author,
+        ae: n.attrs.controls,
+        af: n.attrs.loop,
+        ag: n.attrs.name,
+        ah: n.attrs.poster,
+        ai: n.src[$data.ctrl[i] || 0],
+        aj: i,
+        ak: common_vendor.o((...args) => $options.play && $options.play(...args), i),
+        al: common_vendor.o((...args) => $options.mediaError && $options.mediaError(...args), i)
       } : n.name === "table" && n.c || n.name === "li" ? common_vendor.e({
-        am: n.name === "li"
+        an: n.name === "li"
       }, n.name === "li" ? {
-        an: "579907e2-1-" + i0,
-        ao: common_vendor.p({
+        ao: "579907e2-1-" + i0,
+        ap: common_vendor.p({
           childs: n.children,
           opts: $props.opts
         })
       } : {
-        ap: common_vendor.f(n.children, (tbody, x, i1) => {
+        aq: common_vendor.f(n.children, (tbody, x, i1) => {
           return common_vendor.e({
             a: tbody.name === "td" || tbody.name === "th"
           }, tbody.name === "td" || tbody.name === "th" ? {
@@ -334,21 +345,21 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
           });
         })
       }, {
-        aq: n.attrs.id,
-        ar: common_vendor.n("_" + n.name + " " + n.attrs.class),
-        as: common_vendor.s(n.attrs.style)
+        ar: n.attrs.id,
+        as: common_vendor.n("_" + n.name + " " + n.attrs.class),
+        at: common_vendor.s(n.attrs.style)
       }) : n.name == "card" ? {
-        av: common_vendor.n(n.attrs.class),
-        aw: common_vendor.s(n.attrs.style),
-        ax: "579907e2-5-" + i0
+        aw: common_vendor.n(n.attrs.class),
+        ax: common_vendor.s(n.attrs.style),
+        ay: "579907e2-5-" + i0
       } : !n.c ? {
-        az: n.attrs.id,
-        aA: common_vendor.s("display:inline;" + n.f),
-        aB: $props.opts[4],
+        aA: n.attrs.id,
+        aB: common_vendor.s("display:inline;" + n.f),
         aC: $props.opts[4],
-        aD: [n]
+        aD: $props.opts[4],
+        aE: [n]
       } : n.c === 2 ? {
-        aF: common_vendor.f(n.children, (n2, j, i1) => {
+        aG: common_vendor.f(n.children, (n2, j, i1) => {
           return {
             a: j,
             b: common_vendor.s(n2.f),
@@ -361,13 +372,13 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
             })
           };
         }),
-        aG: n.attrs.id,
-        aH: common_vendor.n("_block _" + n.name + " " + n.attrs.class),
-        aI: common_vendor.s(n.f + ";" + n.attrs.style)
+        aH: n.attrs.id,
+        aI: common_vendor.n("_block _" + n.name + " " + n.attrs.class),
+        aJ: common_vendor.s(n.f + ";" + n.attrs.style)
       } : {
-        aJ: common_vendor.s(n.f),
-        aK: "579907e2-7-" + i0,
-        aL: common_vendor.p({
+        aK: common_vendor.s(n.f),
+        aL: "579907e2-7-" + i0,
+        aM: common_vendor.p({
           name: n.name,
           attrs: n.attrs,
           childs: n.children,
@@ -379,12 +390,12 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         B: n.name === "br",
         C: n.name === "a",
         K: n.name === "video",
-        Y: n.name === "audio",
-        al: n.name === "table" && n.c || n.name === "li",
-        at: n.name == "card",
-        ay: !n.c,
-        aE: n.c === 2,
-        aM: i
+        Z: n.name === "audio",
+        am: n.name === "table" && n.c || n.name === "li",
+        av: n.name == "card",
+        az: !n.c,
+        aF: n.c === 2,
+        aN: i
       });
     }),
     b: $props.attrs.id,

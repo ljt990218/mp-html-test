@@ -215,6 +215,7 @@ export default {
      * @param {Event} e
      */
     play (e) {
+      console.log('播放视频事件',e);
       this.root.$emit('play')
       // #ifndef APP-PLUS
       if (this.root.pauseVideo) {
@@ -249,6 +250,7 @@ export default {
      * @param {Event} e
      */
     imgTap (e) {
+      console.log('图片点击事件',e);
       const node = this.childs[e.currentTarget.dataset.i]
       if (node.a) {
         this.linkTap(node.a)
@@ -436,9 +438,17 @@ export default {
      * @param {Event} e
      */
     fullscreenchange (e) {
-      console.log(e);
-      // this.root.$emit('fullscreenchange', e.detail)
-    }
+      console.log('视频全屏切换监听',e.detail.fullscreen);
+      // console.log(this.root._videos);
+      // this.root._videos.forEach(item => {
+      //   console.log(item);
+      //   if(item.id === e.currentTarget.id){
+      //     item.fullscreen = e.detail.fullscreen
+      //   }
+      // })
+
+      this.root.$emit('fullscreenchange', e.detail.fullscreen)
+    },
   }
 }
 </script>
