@@ -32,9 +32,8 @@ if (!Math) {
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
-    a: common_vendor.o($options.imgLoad),
-    b: common_vendor.o($options.fullscreenchange),
-    c: common_vendor.p({
+    a: common_vendor.o($options.fullscreenchange),
+    b: common_vendor.p({
       content: $data.html
     })
   };

@@ -44,7 +44,6 @@ const _sfc_main = {
      * @param {Event} e
      */
     play(e) {
-      console.log("播放视频事件", e);
       this.root.$emit("play");
       if (this.root.pauseVideo) {
         let flag = false;
@@ -74,7 +73,6 @@ const _sfc_main = {
      * @param {Event} e
      */
     imgTap(e) {
-      console.log("图片点击事件", e);
       const node2 = this.childs[e.currentTarget.dataset.i];
       if (node2.a) {
         this.linkTap(node2.a);
@@ -200,8 +198,14 @@ const _sfc_main = {
      * @param {Event} e
      */
     fullscreenchange(e) {
-      console.log("视频全屏切换监听", e.detail.fullscreen);
-      this.root.$emit("fullscreenchange", e.detail.fullscreen);
+      let data = {
+        id: e.currentTarget.id,
+        offsetLeft: e.currentTarget.offsetLeft,
+        offsetTop: e.currentTarget.offsetTop,
+        direction: e.detail.direction,
+        fullScreen: e.detail.fullScreen
+      };
+      this.root.$emit("fullscreenchange", data);
     }
   }
 };
