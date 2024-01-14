@@ -1,1 +1,0 @@
-<view class="content"><mp-html wx:if="{{b}}" bindfullscreenchange="{{a}}" u-i="b979da36-0" bind:__l="__l" u-p="{{b}}"/></view>

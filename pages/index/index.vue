@@ -16,13 +16,7 @@ export default {
 			html: `<div><video  id="video" src='https://media.w3.org/2010/05/sintel/trailer.mp4' /></div><div><video src='https://media.w3.org/2010/05/sintel/trailer.mp4' id="video2" /></div>`
 		}
 	},
-	onLoad() {
-
-	},
 	methods: {
-		imgLoad(e) {
-			console.log(e);
-		},
 		fullscreenchange(e) {
 			console.log(e);
 		}
